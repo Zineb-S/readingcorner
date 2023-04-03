@@ -11,7 +11,7 @@ const NavBar = () => {
   return (
     <><Navbar fixed="bottom" id='navbar' expand="lg">
       <Container>
-        <Navbar.Brand href="/"><img src={logo} width={40}></img> My Reading Corner</Navbar.Brand>
+        <Navbar.Brand href="/"><img src={logo} width={40} alt='logo'></img> My Reading Corner</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end" style={{ width: "100%" }}>
