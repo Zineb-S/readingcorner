@@ -56,30 +56,36 @@ const Home = () => {
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
-    <div class="col-md-12 text-center">
-    <Button variant="warning"  style={{marginTop:8}} > Best Sellers</Button>
-        </div>
-        
-      </div>
-      <div id="search">
-        <InputGroup className="mb-3">
-          <Form.Control
-            placeholder="Search book by title or authors"
-            aria-label="Search book by title or authors"
-            aria-describedby="basic-addon2"
-          />
-          <InputGroup.Text id="basic-addon2">Search</InputGroup.Text>
-          <Dropdown >
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+    <div className="col-md-12 text-center" >
+    <Button variant="warning" href="/bestsellers" style={{marginTop:-3}} > Best Sellers</Button>
+    <Dropdown style={{display:'inline-grid'}}>
+            <Dropdown.Toggle variant="dark" id="dropdown-basic" >
               Genre      </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+              
+              <Dropdown.Item href="#/action-3">Classic</Dropdown.Item>
+              <Dropdown.Item href="#/action-3">Crime</Dropdown.Item>
+              <Dropdown.Item href="#/action-3">Fantasy</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Fiction</Dropdown.Item>
+              <Dropdown.Item href="#/action-1">Romance</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-        </InputGroup>
+        </div>
+        
+      </div>
+      <div id="search" >
+        <InputGroup className="mb-3" >
+          <Form.Control 
+            placeholder="Search book by title or author"
+            aria-label="Search book by title or author"
+            aria-describedby="basic-addon2"
+            
+          />
+          <InputGroup.Text id="basic-addon2" >Search</InputGroup.Text>
+          </InputGroup>
+         
+          
       </div>
 
       <h3 style={{ marginLeft: 50, marginTop: 20 }}>English Books </h3>

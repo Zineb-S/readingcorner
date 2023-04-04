@@ -1,27 +1,95 @@
 import express from "express";
 import mysql from 'mysql'
-import http from 'http'
-import fetch from 'node-fetch'
+
 import jwt from 'jsonwebtoken'
 import cors from 'cors'
 import fs from 'fs'
 import bodyParser from 'body-parser'
-import multer from 'multer'
-import path from 'path'
-import swaggerJsDoc from "swagger-jsdoc"
-import swaggerUi from "swagger-ui-express"
+
+
+
 const PORT = process.env.PORT || 3001;
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     database: "bookstore"
 })
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(express.json())
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
+var data = fs.readFileSync('./client/src/data/currentUser.json')
+var myObject = JSON.parse(data);
+const verify = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+
+    if (authHeader) {
+
+        const token = authHeader.split(" ")[1];
+        jwt.verify(token, "mySecretKey", (err, user) => {
+            if (err) {
+                return res.status(403).json("Token is not valid !")
+            }
+            req.user = user;
+            next();
+        })
+    }
+    else {
+        res.status(401).json("You are not authenticated ! ")
+    }
+
+}
+const generateAccessToken = (user) => {
+    if (user) {
+        return jwt.sign({ id: user.user_id, role: user.user_role }, "mySecretKey") //{ expiresIn: "15m" }
+    }
+
+}
+app.post("/api/login", (req, res) => {
+
+    try {
+        db.query("SELECT * FROM users where user_email='" + req.body.email + "'and user_password ='" + req.body.password + "'",
+            function (err, result) {
+                if (result.length != 0) {
+                    const accessToken = generateAccessToken(result[0])
+
+                    myObject.push(result[0], accessToken);
+                    var newData2 = JSON.stringify(myObject);
+                    fs.writeFile("./client/src/data/currentUser.json", newData2, (err) => {
+                        // Error checking
+                        if (err) throw err;
+                        console.log("Current User Added");
+                    });
+                    res.status(200).json(myObject)
+                }
+                else {
+                    res.status(400).json("Incorrect Email or Password !")
+
+                }
+            }
+        )
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+)
+app.post("/api/logout", verify, (req, res) => {
+    res.status(200).json("You logged out successfully")
+    let result = []
+    fs.writeFile('./client/src/data/currentUser.json', JSON.stringify(result), (err) => {
+        // Error checking
+        if (err) {
+            res.status(400).json("You failed to Log out")
+            throw err;
+        }
+
+    })
+
+})
 
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
@@ -38,7 +106,6 @@ app.get('/api/users', (req, res) => {
         }
     )
 })
-
 app.get('/api/users/:id', (req, res) => {
 
     db.query("SELECT * FROM users where user_id='" + req.params.id + "' ",
@@ -115,7 +182,6 @@ app.get('/api/books/:id', (req, res) => {
         }
     )
 })
-
 app.post('/api/books/create', function (req, res) {
     db.query("INSERT INTO `books`(`book_id`, `book_title`, `book_author`, `book_genre`, `book_picture`, `book_price`) VALUES (NULL,'" + req.body.title + "','" + req.body.author + "','" + req.body.genre + "','" + req.body.picture + "','" + req.body.price + "')",
         function (err, result) {
@@ -145,6 +211,69 @@ app.delete("/api/books/:deletedBookID", (req, res) => {
         function (err, result) {
             if (err) {
                 res.status(400).json("Failed to delete book")
+                throw err;
+            }
+
+
+            res.status(200).json(result)
+        }
+    )
+
+})
+app.get('/api/orders', (req, res) => {
+
+    db.query("SELECT * FROM orders",
+        function (err, result) {
+            if (err) {
+                res.status(400).json("Failed to get list of orders")
+                throw err;
+            }
+            res.status(200).json(result)
+        }
+    )
+})
+app.get('/api/orders/:id', (req, res) => {
+
+    db.query("SELECT * FROM orders where user_id='" + req.params.id + "' ",
+        function (err, result) {
+            if (err) {
+                res.status(400).json("Failed to get order")
+                throw err;
+            }
+
+            res.status(200).json(result)
+        }
+    )
+})
+app.post('/api/orders/create', function (req, res) {
+    db.query("INSERT INTO `orders`(`order_id`, `user_id`, `order_books`, `order_total`,`order_date`) VALUES (NULL,'" + req.body.id + "','" + req.body.books + "','" + req.body.total + "','" + req.body.date + "')",
+        function (err, result) {
+            if (err) {
+                res.status(400).json("Failed to create new order")
+                throw err;
+            }
+
+            res.status(200).json(result)
+        }
+    )
+})
+app.put('/api/orders/edit', function (req, res) {
+    db.query("UPDATE `orders` SET `user_id`='" + req.body.id + "',`order_books`='" + req.body.books + "',`order_total`='" + req.body.total + "',`order_date`='" + req.body.date + "' WHERE `order_id`=" + req.body.orderid + "",
+        function (err, result) {
+            if (err) {
+                res.status(400).json("Failed to edit order")
+                throw err;
+            }
+
+            res.status(200).json(result)
+        }
+    )
+})
+app.delete("/api/orders/:deletedOrderID", (req, res) => {
+    db.query("DELETE FROM `orders` WHERE `order_id`=" + req.params.deletedOrderID + "",
+        function (err, result) {
+            if (err) {
+                res.status(400).json("Failed to delete order")
                 throw err;
             }
 
