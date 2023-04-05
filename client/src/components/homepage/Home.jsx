@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -7,7 +7,62 @@ import bannerPic from '../../assets/library.jpg'
 import Carousel from 'react-bootstrap/Carousel';
 import NavBar from '../NavBar'
 import Cards from "./Cards";
+import axios from 'axios';
+import { ColumnDirective, ColumnsDirective, Filter, GridComponent } from '@syncfusion/ej2-react-grids';
+import { Group, Inject, Page, Sort } from '@syncfusion/ej2-react-grids';
+import '../../../node_modules/@syncfusion/ej2-base/styles/material.css';
+import '../../../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+import '../../../node_modules/@syncfusion/ej2-calendars/styles/material.css';
+import '../../../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
+import '../../../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+import '../../../node_modules/@syncfusion/ej2-navigations/styles/material.css';
+import '../../../node_modules/@syncfusion/ej2-popups/styles/material.css';
+import '../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+import "../../../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
+import { Swiper,SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+import "swiper/css";
+import "swiper/css/pagination";
+import { FaShoppingCart } from "react-icons/fa";
+import ProductCard from "./ProductCard";
 const Home = () => {
+  const [book, setBooks] = React.useState([])
+  React.useEffect(() => {
+    axios.get('http://localhost:3001/api/books').then((response) => {
+      setBooks(response.data)
+      
+      
+    })
+  }, []);
+  let template = (props) => {
+
+    const src = props.Avatar;
+
+    return (<div>
+
+      <img className='bookpic' src={props.book_picture} alt={props.book_picture} />
+
+    </div>)
+
+  }
+  let buy = (props) =>{
+    return ( <div><Button id='purchasebtn' variant="warning" style={{ marginLeft: 10, marginBottom: 10 }} > <FaShoppingCart /></Button></div>)
+  }
+  const pageSettings = { pageSize: 3 };
+  const sortSettings = {
+    columns: [
+      { field: 'book_id', direction: 'Ascending' }
+    ]
+  };
+  const filterSettings = {
+    columns: [
+      { field: 'book_price', operator: 'greaterthan', value: '' }
+    ]
+  };
+  var rows = [];
+  for (var i = 0; i < book.length; i++) {
+    rows.push(<SwiperSlide><ProductCard id={book[i].book_id}  author={book[i].book_author} picture={book[i].book_picture} genre={book[i].book_genre}  title={book[i].book_title}  price={book[i].book_price}  ></ProductCard></SwiperSlide>);
+  };
   return (
     <>
 
@@ -87,14 +142,78 @@ const Home = () => {
          
           
       </div>
-
-      <h3 style={{ marginLeft: 50, marginTop: 20 }}>English Books </h3>
+     <h3 style={{ marginLeft: 50, marginTop: 20 }}>English Books </h3>
       <div id="engbooks">
-        <Cards></Cards>
+      <Swiper
+            slidesPerView={6}
+            spaceBetween={10}
+            pagination={{
+                clickable: true,
+            }}
+            breakpoints={{
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 50,
+                },
+            }}
+            modules={[Pagination]}
+            className="mySwiper"
+        >
+
+<Container><Row>{rows}</Row></Container>
+
+        
+        </Swiper>   
       </div>
+      <GridComponent dataSource={book} allowPaging={true} pageSettings={pageSettings}filterSettings={filterSettings} allowSorting={true} sortSettings={sortSettings} allowFiltering={true}>
+        <ColumnsDirective>
+          <ColumnDirective field='book_picture' headerText='Picture' template={template} width='55' textAlign="Center" />
+          <ColumnDirective field='book_title' headerText='Title' width='150' />
+          <ColumnDirective field='book_author' headerText='Author' width='100' />
+          <ColumnDirective field='book_genre' headerText='Genre' width='100' />
+          <ColumnDirective field='book_price' headerText='Price' width='60' />
+          <ColumnDirective template={buy} width='20' />
+
+        </ColumnsDirective><Inject services={[Page,Sort, Filter, Group]} />
+      </GridComponent>
       <h3 style={{ marginLeft: 50, marginTop: 20 }}>French Books </h3>
       <div id="frbooks">
-        <Cards></Cards>
+      <Swiper
+            slidesPerView={6}
+            spaceBetween={10}
+            pagination={{
+                clickable: true,
+            }}
+            breakpoints={{
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                },
+                1024: {
+                    slidesPerView: 5,
+                    spaceBetween: 50,
+                },
+            }}
+            modules={[Pagination]}
+            className="mySwiper"
+        >
+
+<Container><Row>{rows}</Row></Container>
+
+        
+        </Swiper>   
       </div>
 
       <NavBar></NavBar>

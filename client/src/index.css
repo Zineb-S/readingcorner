@@ -4,8 +4,8 @@
   
 }
 #navicons{
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
 }
 #purchasebtn {
   border-radius: 60%;
@@ -61,4 +61,7 @@
 #slidebanner{
 border-radius: 30px;
  
+}
+#userorders{
+  margin: 100px auto;
 }

@@ -95,7 +95,7 @@ const Login = () => {
             <div className="text-center mb-3">
               <p>Sign in with:</p>
 
-              <div className='d-flex justify-content-between mx-auto' style={{ width: '40%' , height:'120px',marginTop:60}}>
+              <div className='d-flex justify-content-between mx-auto' style={{ width: '40%' , height:'40px',marginTop:60}}>
                 <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#000' }}>
                   <MDBIcon fab icon='facebook' size="sm"> <FaFacebookF /> </MDBIcon>
                 </MDBBtn>
@@ -134,7 +134,7 @@ const Login = () => {
             <div className="text-center mb-3">
               <p>Sign up with:</p>
 
-              <div className='d-flex justify-content-between mx-auto' style={{ width: '40%' , height:'100px',marginTop:60}}>
+              <div className='d-flex justify-content-between mx-auto' style={{ width: '40%' , height:'10px'}}>
               <MDBBtn tag='a' color='none' className='m-1' style={{ color: '#000' }}>
                   <MDBIcon fab icon='facebook' size="sm"> <FaFacebookF /> </MDBIcon>
                 </MDBBtn>

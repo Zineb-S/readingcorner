@@ -14,7 +14,6 @@ const db = mysql.createConnection({
     user: "root",
     database: "bookstore"
 })
-
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -112,6 +111,19 @@ app.get('/api/users/:id', (req, res) => {
         function (err, result) {
             if (err) {
                 res.status(400).json("Failed to get user")
+                throw err;
+            }
+
+            res.status(200).json(result)
+        }
+    )
+})
+app.get('/api/user/history/:id', (req, res) => {
+
+    db.query("SELECT * FROM orders where user_id='" + req.params.id + "' ",
+        function (err, result) {
+            if (err) {
+                res.status(400).json("Failed to get orders")
                 throw err;
             }
 

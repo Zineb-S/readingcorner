@@ -24,7 +24,7 @@ a {
 
 .main-body {
     text-align: center;
-    
+
 }
 
 .main-title {
@@ -183,4 +183,30 @@ a {
 
 .bottom-dy a {
     color: rgb(255, 255, 255);
+}
+
+#usersDashboard {
+    width: 70%;
+    height: 70%;
+    margin: 30px auto;
+}
+
+.avatar {
+    width: 3rem;
+    height: 3rem;
+}
+
+.bookpic {
+    width: 80px;
+    height: 90px;
+}
+
+#adminActions {
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+}
+
+#adminActions button {
+    margin-right: 20px;
 }

@@ -1,14 +1,11 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom';
-import Login from './authentication/Login';
 import Home from './homepage/Home';
-import Dashboard from './admin/Dashboard';
-import Account from './user/Account';
 import Bestsellers from './homepage/Bestsellers';
 import ProtectedRoutes from './authentication/ProtectedRoutes';
-import Books from './admin/Books';
-import Orders from './admin/Orders';
-import Users from './admin/Users';
+import Cart from '../components/user/Cart'
+import Success from './user/Success';
+import Cancel from './user/Cancel';
 
 const Router = () => {
     return (
@@ -16,12 +13,14 @@ const Router = () => {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<ProtectedRoutes />} />
-                <Route path="/dashboard" element={<ProtectedRoutes />} />
-                <Route path="/profile" element={<ProtectedRoutes/>} />
+                <Route path="/dashboard" element={<ProtectedRoutes name='dashboard' />} />
+                <Route path="/profile" element={<ProtectedRoutes name='profile'/>} />
                 <Route path="/bestsellers" element={<Bestsellers/>} />
-                <Route path="/orders" element={<Orders/>} />
-                <Route path="/books" element={<Books/>} />
-                <Route path="/users" element={<Users/>} />
+                <Route path="/orders" element={<ProtectedRoutes name='orders'/>} />
+                <Route path="/books" element={<ProtectedRoutes name='books'/>} />
+                <Route path="/users" element={<ProtectedRoutes name='users'/>} />
+                <Route path="/success" element={<Success/>} />
+                <Route path="/cancel" element={<Cancel/>} />
             </Routes>
         </div>
 
