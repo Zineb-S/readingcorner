@@ -21,7 +21,7 @@ export function CartProvider({children}){
         return quantity;
     }
     function addOneToCart(id){
-      
+        console.log(cartProducts)
         const quantity = getProductQuantity(id);
 
         if (quantity === 0 ){
@@ -66,7 +66,7 @@ export function CartProvider({children}){
         return totatCost
     }
     const contextValue = {
-        items:[],
+        items:cartProducts,
         getProductQuantity,
         addOneToCart,
         removeOneFromCart,

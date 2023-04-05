@@ -8,7 +8,7 @@ function ProductCard(props) { // props.product is the product we are selling
     const cart = useContext(CartContext);
     const id = props.id
     const productQuantity = cart.getProductQuantity(id);
-    console.log(productQuantity)
+    
     return (
         <Card>
             <Card.Body>
@@ -20,10 +20,10 @@ function ProductCard(props) { // props.product is the product we are selling
                     <>
                         <Form as={Row}>
                             <Form.Label column="true" sm="6">In Cart: {productQuantity}</Form.Label>
-                            <Col sm="6">
+                            <Row sm="6" style={{marginLeft:50}}>
                                 <Button sm="6" onClick={() => cart.addOneToCart(product.id)} className="mx-2">+</Button>
                                 <Button sm="6" onClick={() => cart.removeOneFromCart(product.id)} className="mx-2">-</Button>
-                            </Col>
+                            </Row>
                         </Form>
                         <Button variant="danger" onClick={() => cart.deleteFromCart(product.id)} className="my-2">Remove from cart</Button>
                     </>

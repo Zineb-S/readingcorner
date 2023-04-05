@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import {MDBContainer,MDBTabs,MDBTabsItem,MDBTabsLink,MDBTabsContent,MDBTabsPane,MDBBtn,MDBIcon,MDBInput,MDBCheckbox}from 'mdb-react-ui-kit';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
-import NavBar from '../NavBar'
+import NavBar from '../homepage/Navbar'
 import { FaFacebookF ,FaTwitter,FaGoogle,FaGithub} from 'react-icons/fa';
 import ProtectedRoutes from './ProtectedRoutes';
 

@@ -14,7 +14,7 @@ import '../../../node_modules/@syncfusion/ej2-navigations/styles/material.css';
 import '../../../node_modules/@syncfusion/ej2-popups/styles/material.css';
 import '../../../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
 import "../../../node_modules/@syncfusion/ej2-react-grids/styles/material.css";
-import NavBar from '../NavBar';
+import NavBar from '../homepage/Navbar';
 const Account = () => {
   var currentUserID = localStorage.getItem('id')
   

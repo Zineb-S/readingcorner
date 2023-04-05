@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import '../../App.css';
 import { books } from '../../data/books';
 import Book from './Book';
-import NavBar from '../NavBar';
+import NavBar from '../homepage/Navbar';
 const Bestsellers = () => {
   return (
     <><div className='main-body'>

@@ -6,7 +6,7 @@ import cors from 'cors'
 import fs from 'fs'
 import bodyParser from 'body-parser'
 
-
+import Stripe from "stripe";
 
 const PORT = process.env.PORT || 3001;
 const db = mysql.createConnection({
@@ -14,6 +14,9 @@ const db = mysql.createConnection({
     user: "root",
     database: "bookstore"
 })
+const stripe = Stripe('sk_test_51MtbLbHz09nFNN1Jba1ZYva3bOXy6yOOcJaDWRsec68ypHbiP8d7wFNEHZsGgggpDAn50clplK641vGHBWNo7R5800P7Rf6GiI');
+
+
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -295,6 +298,42 @@ app.delete("/api/orders/:deletedOrderID", (req, res) => {
     )
 
 })
+app.post("/checkout", async (req, res) => {
+   
+    console.log(req.body);
+    const items = req.body.items;
+    let lineItems = [];
+    let price = ""
+    items.forEach((item)=> {
+        if(item.id===1){price="price_1MtbntHz09nFNN1JB5EnvhCd"}
+        if(item.id===2){price="price_1MtbqJHz09nFNN1JqRRaLhff"}
+        if(item.id===3){price="price_1MtbqpHz09nFNN1JOIN9qD7I"}
+        if(item.id===4){price="price_1MtbrHHz09nFNN1JPnYqEXGq"}
+        if(item.id===5){price="price_1MtbrkHz09nFNN1JAn1Pnkei"}
+        if(item.id===6){price="price_1MtbsJHz09nFNN1JI4sHTTPD"}
+        if(item.id===7){price="price_1MtbswHz09nFNN1JIzx2QOsT"}
+        if(item.id===8){price="price_1MtbtrHz09nFNN1J86yGapEw"}
+        if(item.id===9){price="price_1MtbuEHz09nFNN1JnIMMmkL6"}
+        if(item.id===10){price="price_1MtbuaHz09nFNN1JYfQHmEqD"}
+        lineItems.push(
+            {
+                price: price,
+                quantity: item.quantity
+            }
+        )
+    });
+
+    const session = await stripe.checkout.sessions.create({
+        line_items: lineItems,
+        mode: 'payment',
+        success_url: "http://localhost:3000/success",
+        cancel_url: "http://localhost:3000/cancel"
+    });
+
+    res.send(JSON.stringify({
+        url: session.url
+    }));
+});
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });

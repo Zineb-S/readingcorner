@@ -5,7 +5,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Dropdown from 'react-bootstrap/Dropdown';
 import bannerPic from '../../assets/library.jpg'
 import Carousel from 'react-bootstrap/Carousel';
-import NavBar from '../NavBar'
+
 import Cards from "./Cards";
 import axios from 'axios';
 import { ColumnDirective, ColumnsDirective, Filter, GridComponent } from '@syncfusion/ej2-react-grids';
@@ -25,6 +25,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { FaShoppingCart } from "react-icons/fa";
 import ProductCard from "./ProductCard";
+import NavbarComponent from "./Navbar";
+
 const Home = () => {
   const [book, setBooks] = React.useState([])
   React.useEffect(() => {
@@ -184,39 +186,9 @@ const Home = () => {
 
         </ColumnsDirective><Inject services={[Page,Sort, Filter, Group]} />
       </GridComponent>
-      <h3 style={{ marginLeft: 50, marginTop: 20 }}>French Books </h3>
-      <div id="frbooks">
-      <Swiper
-            slidesPerView={6}
-            spaceBetween={10}
-            pagination={{
-                clickable: true,
-            }}
-            breakpoints={{
-                640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
-                },
-                768: {
-                    slidesPerView: 4,
-                    spaceBetween: 40,
-                },
-                1024: {
-                    slidesPerView: 5,
-                    spaceBetween: 50,
-                },
-            }}
-            modules={[Pagination]}
-            className="mySwiper"
-        >
-
-<Container><Row>{rows}</Row></Container>
-
-        
-        </Swiper>   
-      </div>
-
-      <NavBar></NavBar>
+      <h3 style={{ marginLeft: 50, marginTop: 20 , marginBottom:100 }}>French Books </h3>
+ 
+      <NavbarComponent></NavbarComponent>
 
     </>
   )
