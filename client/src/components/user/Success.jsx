@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React from 'react'
-import { Button } from 'react-bootstrap';
+import { Button, Navbar } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
+import NavbarComponent from '../homepage/Navbar';
 
 const Success = () => {
   var currentUserID = localStorage.getItem('id')
@@ -22,12 +23,15 @@ const Success = () => {
       }
     }
 
-
+    localStorage.removeItem('books')
+    localStorage.removeItem('total')
+    localStorage.removeItem('date')
 
   };
   handleSubmitOrder()
   return (
-    <><ToastContainer /><div >Thank You for your purchase</div></>
+    <><ToastContainer /><div >Thank You for your purchase</div>
+    <NavbarComponent></NavbarComponent></>
   )
 }
 

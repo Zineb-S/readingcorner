@@ -4,8 +4,7 @@ import Home from './homepage/Home';
 import Bestsellers from './homepage/Bestsellers';
 import ProtectedRoutes from './authentication/ProtectedRoutes';
 import Cart from '../components/user/Cart'
-import Success from './user/Success';
-import Cancel from './user/Cancel';
+
 
 const Router = () => {
     return (
@@ -19,8 +18,8 @@ const Router = () => {
                 <Route path="/orders" element={<ProtectedRoutes name='orders'/>} />
                 <Route path="/books" element={<ProtectedRoutes name='books'/>} />
                 <Route path="/users" element={<ProtectedRoutes name='users'/>} />
-                <Route path="/success" element={<Success/>} />
-                <Route path="/cancel" element={<Cancel/>} />
+                <Route path="/success" element={<ProtectedRoutes name='success'/>} />
+                <Route path="/cancel" element={<ProtectedRoutes name='cancel'/>} />
             </Routes>
         </div>
 
