@@ -299,7 +299,7 @@ app.delete("/api/orders/:deletedOrderID", (req, res) => {
 
 })
 app.post("/checkout", async (req, res) => {
-   
+    
     console.log(req.body);
     const items = req.body.items;
     let lineItems = [];

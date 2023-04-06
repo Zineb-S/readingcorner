@@ -13,6 +13,9 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import {  Modal, ModalBody, ModalHeader, ModalTitle, NavDropdown } from 'react-bootstrap';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import Form from 'react-bootstrap/Form';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { getProductData } from '../user/productsStore';
 function NavbarComponent() {
     const cart = useContext(CartContext);
     const [show, setShow] = useState(false);
@@ -20,7 +23,24 @@ function NavbarComponent() {
     const handleShow = () => setShow(true);
 
     const productsCount = cart.items.reduce((sum, product) => sum + product.quantity, 0);
+    var currentUserID = localStorage.getItem('id')
+    var orderBooks = ''
+    var total = cart.getTotalCost()
+    var date = new Date().toJSON()
+    
+   // product data loop to get titles of books by ids x quantity then push them to array then submit order
+
     const checkout = async () => {
+      
+        cart.items.map( (currentProduct, idx) => (
+            orderBooks+=`${getProductData(currentProduct.id)?.title} x ${currentProduct.quantity} `
+          
+        ))
+        
+        localStorage.setItem('books',orderBooks)
+        localStorage.setItem('total',total)
+        localStorage.setItem('date',date)
+            orderBooks=''
         console.log(cart.items)
         await fetch('http://localhost:3001/checkout', {
             method: "POST",

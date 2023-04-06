@@ -12,7 +12,7 @@ const Router = () => {
         <div className="App">
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/login" element={<ProtectedRoutes />} />
+                <Route path="/login" element={<ProtectedRoutes name='login' />} />
                 <Route path="/dashboard" element={<ProtectedRoutes name='dashboard' />} />
                 <Route path="/profile" element={<ProtectedRoutes name='profile'/>} />
                 <Route path="/bestsellers" element={<Bestsellers/>} />

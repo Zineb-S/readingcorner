@@ -26,6 +26,10 @@ const ProtectedRoutes = (props) => {
         if (path == 'users'){
             return <Users />
         }
+        
+        if (path == 'login'){
+            return <Dashboard/>
+        }
     }
     else {
         if (role == "user") { return <Account /> }

@@ -175,17 +175,25 @@ const Home = () => {
         
         </Swiper>   
       </div>
-      <GridComponent dataSource={book} allowPaging={true} pageSettings={pageSettings}filterSettings={filterSettings} allowSorting={true} sortSettings={sortSettings} allowFiltering={true}>
+      <div>
+        <Container>
+        <GridComponent  dataSource={book} allowPaging={true} pageSettings={pageSettings}filterSettings={filterSettings} allowSorting={true} sortSettings={sortSettings} allowFiltering={true}>
         <ColumnsDirective>
-          <ColumnDirective field='book_picture' headerText='Picture' template={template} width='55' textAlign="Center" />
-          <ColumnDirective field='book_title' headerText='Title' width='150' />
-          <ColumnDirective field='book_author' headerText='Author' width='100' />
-          <ColumnDirective field='book_genre' headerText='Genre' width='100' />
-          <ColumnDirective field='book_price' headerText='Price' width='60' />
-          <ColumnDirective template={buy} width='20' />
+          <ColumnDirective field='book_picture' headerText='Picture' template={template}  textAlign="Center" />
+          <ColumnDirective field='book_title' headerText='Title' />
+          <ColumnDirective field='book_author' headerText='Author'  />
+          <ColumnDirective field='book_genre' headerText='Genre' />
+          <ColumnDirective field='book_price' headerText='Price'  />
+          <ColumnDirective template={buy}  />
 
         </ColumnsDirective><Inject services={[Page,Sort, Filter, Group]} />
       </GridComponent>
+      </Container>
+      
+
+      </div>
+      
+
       <h3 style={{ marginLeft: 50, marginTop: 20 , marginBottom:100 }}>French Books </h3>
  
       <NavbarComponent></NavbarComponent>
